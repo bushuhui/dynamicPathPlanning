@@ -1,6 +1,6 @@
 # Dynamic Path Planning
 
-This program demostrates how to dynamicly plan a path from a begin point to an end point, where the environment is incrementally scanned. The simplest A* algorithm is used to plan a path from current position to destination using currenly scanned map. Different with traditionaly path planning, it can plan route for completely unknown environment.
+This program demonstrates how to dynamically plan a path from a begin point to an end point, where the environment is incrementally scanned. The simplest A* algorithm is used to plan a path from current position to destination using currently scanned map. Different with traditional path planning, it can plan route for completely unknown environment.
 
 
 ## Requirements:
