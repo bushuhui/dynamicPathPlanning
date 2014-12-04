@@ -1,0 +1,69 @@
+CC   = cl
+CXX  = cl
+LINK = link
+MOC  = moc
+
+###############################################################################
+###############################################################################
+DEFAULT_CFLAGS = -c -nologo -Zm200 -Zc:wchar_t- -O2 -MD -GR -EHsc -W3 -w34100 -w34189 \
+				 -DUNICODE -DWIN32
+DEFAULT_LDFLAGS= /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO
+
+###############################################################################
+# run EXPORT PKG_CONFIG_PATH=/opt/OpenCV-2.4/lib/pkgconfig
+###############################################################################
+OPENCV_CFLAGS = 
+OPENCV_LIBS   = opencv_calib3d248.lib opencv_contrib248.lib opencv_core248.lib \
+				opencv_features2d248.lib opencv_flann248.lib opencv_gpu248.lib \
+				opencv_highgui248.lib opencv_imgproc248.lib opencv_legacy248.lib \
+				opencv_ml248.lib opencv_nonfree248.lib opencv_objdetect248.lib \
+				opencv_ocl248.lib opencv_photo248.lib opencv_stitching248.lib \
+				opencv_superres248.lib opencv_ts248.lib opencv_video248.lib \
+				opencv_videostab248.lib \
+				zlib.lib IlmImf.lib libjasper.lib libjpeg.lib libpng.lib libtiff.lib
+
+###############################################################################
+# QT settings
+###############################################################################
+QT_CFLAGS = -DQT_DLL -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB \
+			-DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT \
+			-DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -DNDEBUG \
+			-I"$(QT_DIR)\include\QtCore" -I"$(QT_DIR)\include\QtGui" -I"$(QT_DIR)\include" \
+			-I"$(QT_DIR)\include\ActiveQt" -I"$(QT_DIR)\mkspecs\default"
+QT_LIBS   = /LIBPATH:"$(QT_DIR)\lib" \
+			QtGui4.lib QtCore4.lib QtMultimedia4.lib Qtnetwork4.lib QtOpenGL4.lib
+
+###############################################################################
+###############################################################################
+CFLAGS  = $(QT_CFLAGS) 
+LDFLAGS = $(QT_LIBS)
+
+###############################################################################
+###############################################################################
+src-cxx-all := $(wildcard *.cpp)
+src-c-all   := $(wildcard *.c)
+bin-all     := $(patsubst %.cpp,%.exe,$(src-cxx-all)) $(patsubst %.c,%.e,$(src-c-all))
+
+
+all : draw_map.exe
+
+
+draw_map.exe : map_viewer.obj main.obj moc_map_viewer.obj
+	$(LINK) $(DEFAULT_LDFLAGS) /out:$@ $? $(LDFLAGS)
+
+moc_map_viewer.obj : map_viewer.h
+	$(MOC) -DUNICODE -DWIN32 $(QT_CFLAGS) map_viewer.h -o moc_map_viewer.cpp
+	$(CXX) $(DEFAULT_CFLAGS) $(CFLAGS) /Fomoc_map_viewer.obj moc_map_viewer.cpp
+
+%.exe:%.obj
+	$(LINK) $(DEFAULT_LDFLAGS) /out:$@ $? $(LDFLAGS)
+	
+%.obj:%.cpp
+	$(CXX) $(DEFAULT_CFLAGS) $(CFLAGS) /Fo$@ $? 
+
+%.obj:%.c
+	$(CXX) $(DEFAULT_CFLAGS) $(CFLAGS) /Fo$@ $? 
+
+clean :
+	del *.exe *.obj moc*
+
