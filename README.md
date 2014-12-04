@@ -37,8 +37,8 @@ Only test on Linux Mint 16 64-bit.
 
 
 ## Screenshot:
--![alt text](http://blog.adv-ci.com/wp-content/uploads/2013/05/Screenshot-2D-SLAM-1.png "Screenshot 1")
--![alt text](http://blog.adv-ci.com/wp-content/uploads/2013/05/Screenshot-2D-SLAM.png "Screenshot 2")
+-![alt text](https://raw.githubusercontent.com/bushuhui/dynamicPathPlanning/master/screenshot_1.png "Screenshot 1")
+-![alt text](https://raw.githubusercontent.com/bushuhui/dynamicPathPlanning/master/screenshot_2.png "Screenshot 2")
 
 
 ## Project homepage:
