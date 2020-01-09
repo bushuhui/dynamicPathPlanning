@@ -157,7 +157,7 @@ void RMapLayer::paint(QPainter *painter,
         if( v == RMAP_FREE ) continue;
 
         ix = i % mx;
-        iy = i / my;
+        iy = i / mx;
 
         x2 = x1 + ix*dx;
         y2 = y1 + iy*dy;
